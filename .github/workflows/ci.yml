@@ -1,0 +1,57 @@
+name: SideMade Tests
+
+on: [push]  # Runs on every push and pull request
+
+jobs:
+  style:
+    name: Style Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install clang-format
+        run: sudo apt-get install clang-format
+
+      - name: Run clang-format check
+        run: |
+          find src/ tests/ -name "*.cpp" -o -name "*.hpp" | xargs clang-format --dry-run -Werror
+
+  build:
+    name: Build Project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: sudo apt-get install cmake g++ libboost-test-dev libeigen3-dev
+
+      - name: Configure CMake
+        run: cmake -B build
+
+      - name: Build Project
+        run: cmake --build build
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: built-files
+          path: build
+
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: built-files
+          path: build
+
+      - name: Run Tests
+        run: cd build && ctest --output-on-failure
