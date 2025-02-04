@@ -1,4 +1,4 @@
-[![SideMade Tests](https://github.com/SaranyaVanga2508/testing-boost-exercise/actions/workflows/ci.yml/badge.svg)](https://github.com/SaranyaVanga2508/testing-boost-exercise/actions/workflows/ci.yml)
+[![Boost Exercise](https://github.com/SaranyaVanga2508/testing-boost-exercise/actions/workflows/ci.yml/badge.svg)](https://github.com/SaranyaVanga2508/testing-boost-exercise/actions/workflows/ci.yml)
 
 # SIDEMADE - Simple Dense Matrix Decomposition
 
